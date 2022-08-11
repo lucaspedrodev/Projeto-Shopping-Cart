@@ -6,9 +6,8 @@ const fetchProducts = async (computador) => {
   const response = await fetch(pc);
   const data = await response.json();
   const { results } = data;
-  console.log(results);
   return results;
-};
+  };
 
 if (typeof module !== 'undefined') {
   module.exports = {
