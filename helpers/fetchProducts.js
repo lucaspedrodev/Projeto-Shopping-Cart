@@ -1,5 +1,13 @@
-const fetchProducts = () => {
-  // seu código aqui
+const fetchProducts = async (computador) => {
+  if (computador === undefined) {
+    return Promise.reject(new Error('You must provide an url'));
+  }
+  const pc = `https://api.mercadolibre.com/sites/MLB/search?q=${computador}`;
+  const response = await fetch(pc);
+  const data = await response.json();
+  const { results } = data;
+  console.log(results);
+  return results;
 };
 
 if (typeof module !== 'undefined') {
@@ -7,3 +15,4 @@ if (typeof module !== 'undefined') {
     fetchProducts,
   };
 }
+fetchProducts('computador');
