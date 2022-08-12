@@ -13,7 +13,7 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 const cartItemClickListener = (event) => {
-  event.targe.remove();
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -31,6 +31,7 @@ const addCartItens = async (item) => {
   const { id: sku, title: name, price: salePrice } = ftItem; // desconstroi o objeto no formato do parametro da função createCartItemElement
   const add = createCartItemElement({ sku, name, salePrice }); // atribui a função com os parametros certos passados
   getCart.appendChild(add); // apenda a função com os parametros corretos na classe cart_items
+  // a função add CartItens busca o item com a fetchItens, desconstroi o objeto do item para passar os parametros para criar os elementos no carrinho de compras e apenda nos elementos de classe Cart_items.
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -44,7 +45,7 @@ const createProductItemElement = ({ sku, name, image }) => {
     'button', 'item__add', 'Adicionar ao carrinho!',
     ));
 
-  btn.addEventListener('click', () => { // criando o escutador passando a função addCartItens. quando 
+  btn.addEventListener('click', () => { // criando o escutador passando a função addCartItens. 
     addCartItens(sku);                  
   }); // quando clicarmos no botão adicionar carrinho, a função addCartItens sera acionada.
   return section;
