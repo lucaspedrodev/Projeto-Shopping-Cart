@@ -12,6 +12,27 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const cartItemClickListener = (event) => {
+  event.targe.remove();
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+const getCart = document.querySelector('.cart__items');
+// const getBtn = document.querySelector('.item__add'); tive que pegar o botão direto na função createProductImageElement
+
+const addCartItens = async (item) => {
+  const ftItem = await fetchItem(item); // pega o item pela função fetch item
+  const { id: sku, title: name, price: salePrice } = ftItem; // desconstroi o objeto no formato do parametro da função createCartItemElement
+  const add = createCartItemElement({ sku, name, salePrice }); // atribui a função com os parametros certos passados
+  getCart.appendChild(add); // apenda a função com os parametros corretos na classe cart_items
+};
+
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -19,8 +40,13 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const btn = section.appendChild(createCustomElement( // criando uma const para ja pegar o botão 
+    'button', 'item__add', 'Adicionar ao carrinho!',
+    ));
 
+  btn.addEventListener('click', () => { // criando o escutador passando a função addCartItens. quando 
+    addCartItens(sku);                  
+  }); // quando clicarmos no botão adicionar carrinho, a função addCartItens sera acionada.
   return section;
 };
 
@@ -38,30 +64,30 @@ const chamaFetch = async () => {
   console.log(itens);
   try {
     products.forEach((elemento) => {
-      itens.appendChild(createProductItemElement({ 
-        sku: elemento.id, 
-        name: elemento.title, 
-        image: elemento.thumbnail }));
+      itens.appendChild(createProductItemElement({
+        sku: elemento.id,
+        name: elemento.title,
+        image: elemento.thumbnail,
+      }));
     });
   } catch (error) {
-    console.log(error); 
+    console.log(error);
   }
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-};
+// const cartItem = document.querySelector('.cart__items');
+// const fItem = async (param) => {
+//   const produto = await fetchItem(param);
+//     produto.forEach((elemento) => {
+//       cartItem.appendChild(createCartItemElement({ 
+//         sku: elemento.id, 
+//         name: elemento.title, 
+//         SalePrice: elemento.price }));
+//    });
+//   };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-};
-
-window.onload = () => { 
- chamaFetch();
+window.onload = () => {
+  chamaFetch();
 };
