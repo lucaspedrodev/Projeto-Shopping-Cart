@@ -75,6 +75,7 @@ const chamaFetch = async () => {
   } catch (error) {
     console.log(error);
   }
+  getSavedCartItems();
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
