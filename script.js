@@ -74,7 +74,7 @@ const chamaFetch = async () => {
   getSavedCartItems();
   const remove = document.querySelectorAll('.cart__items');
   remove.forEach((elemento) => {
-    elemento.addEventListener('click', (event) => event.target.remove())
+    elemento.addEventListener('click', (event) => event.target.remove());
   });
 };
 
@@ -91,6 +91,10 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 //    });
 //   };
 
+const getBtnEsvaziar = document.querySelector('.empty-cart');
+getBtnEsvaziar.addEventListener('click', () => {
+getCart.innerHTML = '';
+});
 window.onload = () => {
   chamaFetch();
 };
