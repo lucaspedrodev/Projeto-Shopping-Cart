@@ -64,7 +64,6 @@ const itens = document.querySelector('.items');
 const chamaFetch = async () => {
   const products = await fetchProducts('computador');
   console.log(itens);
-  try {
     products.forEach((elemento) => {
       itens.appendChild(createProductItemElement({
         sku: elemento.id,
@@ -72,10 +71,11 @@ const chamaFetch = async () => {
         image: elemento.thumbnail,
       }));
     });
-  } catch (error) {
-    console.log(error);
-  }
   getSavedCartItems();
+  const remove = document.querySelectorAll('.cart__items');
+  remove.forEach((elemento) => {
+    elemento.addEventListener('click', (event) => event.target.remove())
+  });
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
